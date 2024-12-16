@@ -42,6 +42,7 @@ while valid == False:
         print("or special charcters (exlcuding \".\")")
 
     if check.isdecimal() == True:
+        # Must fix the ".0.99" float issue!!!!!!!!!!
         num = float(inp)
 
         if num >= 10000:
@@ -97,90 +98,89 @@ while valid == False:
                 cent = inp[4:8]
 
             if num < 100 and num >= 10:
-                ten = [0]
-                one = [1]
+                ten = inp[0]
+                one = inp[1]
                 cent = inp[3:5]
 
             if num < 10 and num >= 0:
                 one = inp[0]
                 cent = inp[2:4]
 
+            thou = int(thou)
+            hun = int(hun)
+            ten = int(ten)
+            one = int(one) 
+
             print(thou)
             print(hun)
             print(ten)
             print(one)
             print(cent)
+
+            # Going from numbers to words
             
-            thoudict = {
-                "0": "",
-                "1": "One Thousand",
-                "2": "Two Thousand",
-                "3": "Three Thousand",
-                "4": "Four Thousand",
-                "5": "Five Thousand",
-                "6": "Six Thousand",
-                "7": "Seven Thousand",
-                "8": "Eight Thousand",
-                "9": "Nine Thousand" }
+            thoudict = ("", "One Thousand", "Two Thousand", "Three Thousand", "Four Thousand", "Five Thousand", "Six Thousand", "Seven Thousand", "Eight Thousand", "Nine Thousand")
 
-            hundict = {
-                "0": "",
-                "1": "One Hundred",
-                "2": "Two Hundred",
-                "3": "Three Hundred",
-                "4": "Four Hundred",
-                "5": "Five Hundred",
-                "6": "Six Hundred",
-                "7": "Seven Hundred",
-                "8": "Eight Hundred",
-                "9": "Nine Hundred" }
+            hundict = ("", "One Hundred", "Two Hundred", "Three Hundred", "Four Hundred", "Five Hundred", "Six Hundred", "Seven Hundred", "Eight Hundred", "Nine Hundred")
 
-            if ten == "1":
+
+            # If the number has a teen in it 
+            
+            if ten == 1:
                 teen = ten + one
+                teen = int(teen)
+                teen = teen - 10
 
-                teensdict = {
-                    "10", "Ten",
-                    "11", "Eleven",
-                    "12", "Twelve",
-                    "13", "Thirteen",
-                    "14", "Fourteen",
-                    "15", "Fifteen",
-                    "16", "Sixteen",
-                    "17", "Seventeen",
-                    "18", "Eighteen",
-                    "19", "Nineteen" }
+                teensdict = ("Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",  "Eighteen", "Nineteen")
 
-                print(thoudict[thou])
+                if num >= 1000 and num < 10000:
+                    print(thoudict[thou] + " " + hundict[hun] + " and " + teensdict[teen] + " Dollars and " + cent + "/100 Cents")
 
-            if ten != "1":
+                if num >= 100 and num < 1000:
+                    print(hundict[hun] + " and " + teensdict[teen] + " Dollars and " + cent + "/100 Cents")
 
-                tendict = {
-                    "0": "",
-                    "2": "Twenty",
-                    "3": "Thirty",
-                    "4": "Forty",
-                    "5": "Fifty",
-                    "6": "Sixty",
-                    "7": "Seventy",
-                    "8": "Eighty",
-                    "9": "Ninety" }
+                if num >= 10 and num < 100:
+                    print(teensdict[teen] + "Dollars and " + cent + "/100 Cents") 
 
-                onedict = {
-                    "0": "",
-                    "1": "One",
-                    "2": "Two",
-                    "3": "Three",
-                    "4": "Four",
-                    "5": "Five",
-                    "6": "Six",
-                    "7": "Seven",
-                    "8": "Eight",
-                    "9": "Nine" } 
+            if ten != 1:
+
+                tendict = ("", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety") 
+
+                onedict = ("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine") 
+
+
+            # Dollars
+             
+                if one != 1:
+                    if num >= 1000 and num < 10000:
+                        print(thoudict[thou] + " " + hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+                        
+                    if num >= 100 and num < 1000:
+                        print(hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+
+                    if num >= 10 and num < 100:
+                        print(tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+
+                    if num >= 1 and num < 10:
+                        print(onedict[one] + " Dollars and " + cent + "/100 Cents")
+
+            # Dollar
+
+                if one == 1:
+                    if num >= 1000 and num < 10000:
+                        print(thoudict[thou] + " " + hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
+                        
+                    if num >= 100 and num < 1000:
+                        print(hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
+
+                    if num >= 10 and num < 100:
+                        print(tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
+
+                    if num >= 1 and num < 10:
+                        print(onedict[one] + " Dollar and " + cent +  "/100 Cents") 
+
+
+
                 
 
-                #if one != "1":
-
-                #if one == "1": 
-
                 
-
