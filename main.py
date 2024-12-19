@@ -1,8 +1,8 @@
 # ----------------------------------------------------------------------------------
 #
 # Title:   Cheque Mate
-# Version: 1.1
-# Date:    December 13, 2024
+# Version: 1.3
+# Date:    December 19, 2024
 #
 # Author:  Nina Jakobsen
 # Course:  ICS3U
@@ -17,6 +17,7 @@
 #  Setting up intial values
 
 valid = False
+check = ""
 inp = ""
 num = 0
 cent = "0"
@@ -32,51 +33,61 @@ while valid == False:
     print("")
     inp = input("Please enter the amount ($0.01 to $9999.99):$")
     check = inp.replace(".","")
-    cent = inp[-3:6]
     
 # Error checking
     
     if check.isdecimal() == False:
         valid = False
-        print("Error. Please do not enter any spaces, letters (A-Z),")
-        print("or special charcters (exlcuding \".\")")
-
+        print("Invalid input. Your amount must:")
+        print("""- Only contain numbers and one decimal place (\".\")
+- The amount must be between $9999.99 and $0.01
+- The decimal place must be followed by two numbers (ex. $123.40
+  not $123.4)""")
+              
     if check.isdecimal() == True:
-        # Must fix the ".0.99" float issue!!!!!!!!!!
-        num = float(inp)
-
-        if num >= 10000:
-            valid = False
-            print("Error. The amount you entered is too large.")
-
-        if num <= 0:
-            valid = False
-            print("Error. The amount you entered is too small.")
-
-        if inp.count(".") > 1:
-            valid = False
-            print("Error. Please only include \".\" maximum one time")
-            print("to seperate dollars and cents.")
-
+              
         if "." not in inp:
             valid = False
-            print("Error. You must include \".\" to seperate dollars")
-            print("from cents (ex. $24.50 or $10.00)")
+            print("Invalid input. Your amount must:")
+            print("""- Only contain numbers and one decimal place (\".\")
+- The amount must be between $9999.99 and $0.01
+- The decimal place must be followed by two numbers (ex. $123.40
+  not $123.4)""")
+          
+        if "." in inp:
 
-        if inp[0] == ".":
-            valid = False
-            print("Error. You cannot begin your value with \".\" (ex.")
-            print("$0.44 not $.44).")
+            if inp.count(".") > 1:
+                valid = False
+                print("Invalid input. Your amount must:")
+                print("""- Only contain numbers and one decimal place (\".\")
+- The amount must be between $9999.99 and $0.01
+- The decimal place must be followed by two numbers (ex. $123.40
+  not $123.4)""")
 
-        else:
-            if inp[-3] != ".":
-                print("Error. You must include 2 digits after the decimal")
-                print("ex. $123.40 not $123.4")
+            if inp.count(".") == 1:
+                
+                num = float(inp)
 
+                if num >= 10000 or num <= 0 or inp.count(".") > 1 or "." not in inp or inp[0] == ".":
+                    valid = False
+                    print("Invalid input. Your amount must:")
+                    print("""- Only contain numbers and one decimal place (\".\")
+- The amount must be between $9999.99 and $0.01
+- The decimal place must be followed by two numbers (ex. $123.40
+  not $123.4)""")
+
+                else:
+                    if inp[-3] != ".":
+                        print("Invalid input. Your amount must:")
+                        print("""- Only contain numbers and one decimal place (\".\")
+- The amount must be between $9999.99 and $0.01
+- The decimal place must be followed by two numbers (ex. $123.40
+  not $123.4)""")
+                
 
         if check.isdecimal() == True and inp.count(".") == 1 and num > 0 and num < 10000 and inp[-3] == "." and inp[0] != ".":
             valid = True 
-            print("Valid")
+            print("Input is valid.")
 
 # Generating output
 
@@ -111,73 +122,67 @@ while valid == False:
             ten = int(ten)
             one = int(one) 
 
-            print(thou)
-            print(hun)
-            print(ten)
-            print(one)
-            print(cent)
-
             # Going from numbers to words
             
-            thoudict = ("", "One Thousand", "Two Thousand", "Three Thousand", "Four Thousand", "Five Thousand", "Six Thousand", "Seven Thousand", "Eight Thousand", "Nine Thousand")
+            thoudict = ("", "One Thousand ", "Two Thousand ", "Three Thousand ", "Four Thousand ", "Five Thousand ", "Six Thousand ", "Seven Thousand ", "Eight Thousand ", "Nine Thousand ")
 
-            hundict = ("", "One Hundred", "Two Hundred", "Three Hundred", "Four Hundred", "Five Hundred", "Six Hundred", "Seven Hundred", "Eight Hundred", "Nine Hundred")
+            hundict = ("", "One Hundred ", "Two Hundred ", "Three Hundred ", "Four Hundred ", "Five Hundred ", "Six Hundred ", "Seven Hundred ", "Eight Hundred ", "Nine Hundred ")
 
 
             # If the number has a teen in it 
             
             if ten == 1:
+                ten = str(ten)
+                one = str(one)
                 teen = ten + one
                 teen = int(teen)
                 teen = teen - 10
-
-                teensdict = ("Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",  "Eighteen", "Nineteen")
+                ten = int(ten)
+                
+                teensdict =  ("Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ",  "Eighteen ", "Nineteen ")
 
                 if num >= 1000 and num < 10000:
-                    print(thoudict[thou] + " " + hundict[hun] + " and " + teensdict[teen] + " Dollars and " + cent + "/100 Cents")
+                    print(thoudict[thou] +  hundict[hun] + teensdict[teen] + "and " + cent + "/100")
 
                 if num >= 100 and num < 1000:
-                    print(hundict[hun] + " and " + teensdict[teen] + " Dollars and " + cent + "/100 Cents")
+                    print(hundict[hun] + teensdict[teen] + "and " + cent + "/100")
 
                 if num >= 10 and num < 100:
-                    print(teensdict[teen] + "Dollars and " + cent + "/100 Cents") 
+                    print(teensdict[teen] + "and " + cent + "/100") 
 
             if ten != 1:
 
-                tendict = ("", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety") 
+                tendict = ("", "", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety ") 
 
-                onedict = ("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine") 
+                onedict = ("", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine ") 
 
 
             # Dollars
              
-                if one != 1:
+                if num > 1:
                     if num >= 1000 and num < 10000:
-                        print(thoudict[thou] + " " + hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+                        print(thoudict[thou] + hundict[hun] + tendict[ten] + onedict[one] + "and " + cent + "/100")
                         
                     if num >= 100 and num < 1000:
-                        print(hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+                        print(hundict[hun] + tendict[ten] + onedict[one] + "and " + cent + "/100")
 
                     if num >= 10 and num < 100:
-                        print(tendict[ten] + " " + onedict[one] + " Dollars and " + cent + "/100 Cents")
+                        print(tendict[ten] + onedict[one] + "and " + cent + "/100")
 
                     if num >= 1 and num < 10:
-                        print(onedict[one] + " Dollars and " + cent + "/100 Cents")
+                        print(onedict[one] + "and " + cent + "/100")
 
             # Dollar
 
-                if one == 1:
-                    if num >= 1000 and num < 10000:
-                        print(thoudict[thou] + " " + hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
-                        
-                    if num >= 100 and num < 1000:
-                        print(hundict[hun] + " and " + tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
-
-                    if num >= 10 and num < 100:
-                        print(tendict[ten] + " " + onedict[one] + " Dollar and " + cent + "/100 Cents")
-
+                if num == 1:
                     if num >= 1 and num < 10:
-                        print(onedict[one] + " Dollar and " + cent +  "/100 Cents") 
+                        print(onedict[one] + "and " + cent +  "/100")
+
+
+            # 0 Dollars and some cents
+
+                if thou == 0 and hun == 0 and ten == 0 and one == 0:
+                    print(cent + "/100")
 
 
 
